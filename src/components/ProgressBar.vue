@@ -30,6 +30,7 @@ export default {
 .progress-bar {
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #e3e3e3;
 
   &__item {
     position: relative;
