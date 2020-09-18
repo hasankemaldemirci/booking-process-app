@@ -1,0 +1,54 @@
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input {
+  font-family: $font-base;
+  color: $color-text;
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.page-content {
+  position: relative;
+  min-height: calc(100vh - 100px);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  margin-left: -15px;
+  margin-right: -15px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+
+  &__column {
+    padding: 15px;
+
+    &--3 {
+      flex: 0 0 25%;
+      max-width: 25%;
+    }
+
+    @media (max-width: 767px) {
+      flex: 1;
+      max-width: 100%;
+    }
+  }
+}
