@@ -9,13 +9,39 @@ export default new Vuex.Store({
       { id: 1, name: "TARİH", isActive: true, completed: false },
       { id: 2, name: "ODA", isActive: false, completed: false },
       { id: 3, name: "ÖDEME", isActive: false, completed: false }
-    ]
+    ],
+    currentStep: { id: 1, name: "TARİH", isActive: true, completed: false },
+    dates: {
+      start: null,
+      end: null
+    }
   },
-  mutations: {},
+  mutations: {
+    setDates(state, val) {
+      state.dates = val;
+    },
+    setProgressStep(state, val) {
+      state.progressSteps.map(step => {
+        if (step.id === val) {
+          (step.isActive = false), (step.completed = true);
+        }
+        if (step.id === val + 1) {
+          step.isActive = true;
+          state.currentStep = step;
+        }
+      });
+    }
+  },
   actions: {},
   getters: {
     progressSteps: state => {
       return state.progressSteps;
+    },
+    currentStep: state => {
+      return state.currentStep;
+    },
+    dates: state => {
+      return state.dates;
     }
   }
 });
