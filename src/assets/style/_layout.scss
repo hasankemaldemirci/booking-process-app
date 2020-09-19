@@ -56,23 +56,29 @@ input {
 }
 
 .form {
+  &__content {
+    padding: 20px;
+  }
   &__footer {
     display: flex;
-    margin-top: 30px;
+    justify-content: space-between;
+    padding: 20px;
+    border-top: 1px solid #e3e3e3;
   }
 }
 
 .btn {
+  min-width: 120px;
+  height: 40px;
+  background-color: transparent;
+  border: 2px solid $color-text;
+  border-radius: 5px;
+  font-weight: 600;
+  text-align: center;
   transition: 0.1s;
 
   &--primary {
-    min-width: 120px;
-    height: 40px;
-    background-color: transparent;
-    border: 2px solid $color-primary;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: 600;
+    border-color: $color-primary;
   }
 
   &--disabled {

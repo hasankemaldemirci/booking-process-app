@@ -40,9 +40,5 @@ export default {
   max-width: 100%;
   border-radius: 10px;
   box-shadow: $box-shadow;
-
-  &__forms {
-    padding: 20px;
-  }
 }
 </style>
