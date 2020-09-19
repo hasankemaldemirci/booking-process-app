@@ -1,55 +1,45 @@
 <template>
   <form class="form form--dates" @submit.prevent>
-    <Datepicker
-      v-model="localDates"
-      mode="range"
-      locale="tr-TR"
-      :popover="{ placement: 'bottom', visibility: 'click' }"
-      :minDate="new Date()"
-      :maxDate="maxDate"
-      :columns="2"
-    >
-      <div class="datepicker">
-        <div class="datepicker__input">
-          <label class="heading">Giriş Tarihi</label>
-          <div class="date-info">
-            {{
-              localDates
-                ? new Date(localDates.start).toLocaleDateString("tr-TR", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric"
-                  })
-                : "-"
-            }}
+    <div class="form__content">
+      <Datepicker
+        value
+        mode="range"
+        locale="tr-TR"
+        :popover="{ placement: 'bottom', visibility: 'click' }"
+        :minDate="new Date()"
+        :maxDate="maxDate"
+        :columns="2"
+        @input="setDateRange"
+      >
+        <div class="datepicker">
+          <div class="datepicker__input">
+            <label class="heading">Giriş Tarihi</label>
+            <div class="date-info">
+              {{ localDates.start || dates.start || "-" }}
+            </div>
+          </div>
+          <img
+            class="datepicker__seperator"
+            src="@/assets/images/icon-arrow-right.svg"
+          />
+          <div class="datepicker__input">
+            <label class="heading">Çıkış Tarihi</label>
+            <div class="date-info">
+              {{ localDates.end || dates.end || "-" }}
+            </div>
           </div>
         </div>
-        <img
-          class="datepicker__seperator"
-          src="@/assets/images/icon-arrow-right.svg"
-        />
-        <div class="datepicker__input">
-          <label class="heading">Çıkış Tarihi</label>
-          <div class="date-info">
-            {{
-              localDates
-                ? new Date(localDates.end).toLocaleDateString("tr-TR", {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric"
-                  })
-                : "-"
-            }}
-          </div>
-        </div>
-      </div>
-    </Datepicker>
+      </Datepicker>
+    </div>
     <div class="form__footer">
       <button
         type="submit"
-        :class="{ 'btn btn--primary': true, 'btn--disabled': !localDates }"
+        :class="{
+          'btn btn--primary': true,
+          'btn--disabled': !localDates
+        }"
         :disabled="!localDates"
-        @click="setDateRange"
+        @click="next"
       >
         İleri
       </button>
@@ -71,12 +61,17 @@ export default {
         start: null,
         end: null
       },
-      dragDates: null,
       formatDateOptions: { year: "numeric", month: "numeric", day: "numeric" }
     };
   },
   components: {
     Datepicker
+  },
+  created() {
+    this.localDates = JSON.parse(localStorage.getItem("dates")) || {
+      start: null,
+      end: null
+    };
   },
   computed: {
     ...mapGetters(["dates"]),
@@ -86,15 +81,29 @@ export default {
     }
   },
   methods: {
-    setDateRange() {
-      this.$store.commit("setDates", this.localDates);
-      this.$store.commit("setProgressStep", 1);
+    setDateRange(val) {
+      const start = new Date(val.start).toLocaleDateString(
+        "tr-TR",
+        this.formatDateOptions
+      );
+      const end = new Date(val.end).toLocaleDateString(
+        "tr-TR",
+        this.formatDateOptions
+      );
+
+      this.localDates = { start, end };
+    },
+    next() {
+      if (this.localDates) {
+        this.$store.commit("setDates", this.localDates);
+        this.$store.commit("setProgressStep", 1);
+      }
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .form {
   &--dates {
     .datepicker {
@@ -120,7 +129,7 @@ export default {
       }
 
       &__seperator {
-        max-width: 35px;
+        max-width: 30px;
         margin-left: 20px;
         margin-right: 20px;
         opacity: 0.3;

@@ -1,13 +1,13 @@
 <template>
   <div class="progress-bar">
     <div
-      :class="{
-        'progress-bar__item': true,
-        'progress-bar__item--active': step.isActive && !step.completed,
-        'progress-bar__item--completed': step.completed
-      }"
       v-for="step in progressSteps"
       :key="step.id"
+      :class="{
+        'progress-bar__item': true,
+        'progress-bar__item--active': step.id === currentStep.id,
+        'progress-bar__item--completed': step.id < currentStep.id
+      }"
     >
       <span class="progress-bar__item__number">{{ step.id }}</span>
       <span class="progress-bar__item__title">{{ step.name }}</span>
@@ -21,7 +21,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProgressBar",
   computed: {
-    ...mapGetters(["progressSteps"])
+    ...mapGetters(["progressSteps", "currentStep"])
   }
 };
 </script>
