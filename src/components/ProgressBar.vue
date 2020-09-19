@@ -38,7 +38,7 @@ export default {
     flex-direction: column;
     align-items: center;
     flex: 1;
-    padding: 15px;
+    padding: 20px;
     text-align: center;
 
     &__number {
@@ -67,7 +67,7 @@ export default {
         content: "";
         position: absolute;
         right: -50%;
-        top: 30px;
+        top: 35px;
         width: 100%;
         height: 2px;
         background-color: #b9b9b9;

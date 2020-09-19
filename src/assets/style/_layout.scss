@@ -54,3 +54,29 @@ input {
     }
   }
 }
+
+.form {
+  &__footer {
+    display: flex;
+    margin-top: 30px;
+  }
+}
+
+.btn {
+  transition: 0.1s;
+
+  &--primary {
+    min-width: 120px;
+    height: 40px;
+    background-color: transparent;
+    border: 2px solid $color-primary;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  &--disabled {
+    border-color: #b9b9b9;
+    cursor: default;
+  }
+}

@@ -4,7 +4,8 @@
       <div class="process-wrapper">
         <ProgressBar />
         <div class="process-wrapper__forms">
-          <Dates />
+          <Dates v-if="currentStep.id === 1" />
+          <Room v-if="currentStep.id === 2" />
         </div>
       </div>
     </div>
@@ -12,15 +13,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 // Components
 import ProgressBar from "./components/ProgressBar";
 import Dates from "./components/Dates";
+import Room from "./components/Room";
 
 export default {
   name: "App",
   components: {
     ProgressBar,
-    Dates
+    Dates,
+    Room
+  },
+  computed: {
+    ...mapGetters(["currentStep"])
   }
 };
 </script>
@@ -34,7 +42,7 @@ export default {
   box-shadow: $box-shadow;
 
   &__forms {
-    padding: 15px;
+    padding: 20px;
   }
 }
 </style>

@@ -10,14 +10,26 @@ export default new Vuex.Store({
       { id: 2, name: "ODA", isActive: false, completed: false },
       { id: 3, name: "ÖDEME", isActive: false, completed: false }
     ],
-    dateRange: {
-      checkin: new Date(),
-      checkout: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+    currentStep: { id: 1, name: "TARİH", isActive: true, completed: false },
+    dates: {
+      start: null,
+      end: null
     }
   },
   mutations: {
-    setDateRange(state, val) {
-      state.dateRange = val;
+    setDates(state, val) {
+      state.dates = val;
+    },
+    setProgressStep(state, val) {
+      state.progressSteps.map(step => {
+        if (step.id === val) {
+          (step.isActive = false), (step.completed = true);
+        }
+        if (step.id === val + 1) {
+          step.isActive = true;
+          state.currentStep = step;
+        }
+      });
     }
   },
   actions: {},
@@ -25,8 +37,11 @@ export default new Vuex.Store({
     progressSteps: state => {
       return state.progressSteps;
     },
-    dateRange: state => {
-      return state.dateRange;
+    currentStep: state => {
+      return state.currentStep;
+    },
+    dates: state => {
+      return state.dates;
     }
   }
 });

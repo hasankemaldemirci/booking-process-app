@@ -1,67 +1,136 @@
 <template>
-  <form class="dates-form" @submit.prevent>
-    <h1>Tarih Seçimi</h1>
-    <DatePicker
-      v-model="dateRange"
+  <form class="form form--dates" @submit.prevent>
+    <Datepicker
+      v-model="localDates"
       mode="range"
+      locale="tr-TR"
       :popover="{ placement: 'bottom', visibility: 'click' }"
       :minDate="new Date()"
       :maxDate="maxDate"
-      @input="setDateRange"
+      :columns="2"
     >
-      <div class="dates-form__datepicker">
-        <div class="dates-form__datepicker__input">
-          <span>Giriş Tarihi</span>
+      <div class="datepicker">
+        <div class="datepicker__input">
+          <label class="heading">Giriş Tarihi</label>
+          <div class="date-info">
+            {{
+              localDates
+                ? new Date(localDates.start).toLocaleDateString("tr-TR", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric"
+                  })
+                : "-"
+            }}
+          </div>
         </div>
-        <div class="dates-form__datepicker__input">
-          <span>Çıkış Tarihi</span>
+        <img
+          class="datepicker__seperator"
+          src="@/assets/images/icon-arrow-right.svg"
+        />
+        <div class="datepicker__input">
+          <label class="heading">Çıkış Tarihi</label>
+          <div class="date-info">
+            {{
+              localDates
+                ? new Date(localDates.end).toLocaleDateString("tr-TR", {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric"
+                  })
+                : "-"
+            }}
+          </div>
         </div>
       </div>
-    </DatePicker>
-    <button type="submit">İleri</button>
+    </Datepicker>
+    <div class="form__footer">
+      <button
+        type="submit"
+        :class="{ 'btn btn--primary': true, 'btn--disabled': !localDates }"
+        :disabled="!localDates"
+        @click="setDateRange"
+      >
+        İleri
+      </button>
+    </div>
   </form>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 // Components
-import DatePicker from "v-calendar/lib/components/date-picker.umd";
+import Datepicker from "v-calendar/lib/components/date-picker.umd";
 
 export default {
   name: "Dates",
   data() {
     return {
-      dateRange: null
+      localDates: {
+        start: null,
+        end: null
+      },
+      dragDates: null,
+      formatDateOptions: { year: "numeric", month: "numeric", day: "numeric" }
     };
   },
   components: {
-    DatePicker,
+    Datepicker
   },
   computed: {
+    ...mapGetters(["dates"]),
     maxDate() {
       const oneYearFromNow = new Date();
       return oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
-    },
+    }
   },
   methods: {
-    setDateRange(range) {
-      this.$store.commit("setDateRange", range);
-    },
-  },
+    setDateRange() {
+      this.$store.commit("setDates", this.localDates);
+      this.$store.commit("setProgressStep", 1);
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-.dates-form {
-  &__datepicker {
-    display: flex;
-    margin-top: 15px;
-    background-color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
+.form {
+  &--dates {
+    .datepicker {
+      display: flex;
+      background-color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
 
-    &__input {
-      flex: 1;
-      padding: 15px;
+      &__input {
+        flex: 1;
+        padding: 15px;
+
+        .heading {
+          font-size: 18px;
+          font-weight: 600;
+          opacity: 0.5;
+        }
+
+        .date-info {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+
+      &__seperator {
+        max-width: 35px;
+        margin-left: 20px;
+        margin-right: 20px;
+        opacity: 0.3;
+      }
+    }
+
+    .form__footer {
+      .btn {
+        margin-left: auto;
+      }
     }
   }
 }
