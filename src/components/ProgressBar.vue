@@ -26,11 +26,20 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .progress-bar {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #e3e3e3;
+
+  @media (max-width: 767px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 1;
+  }
 
   &__item {
     position: relative;

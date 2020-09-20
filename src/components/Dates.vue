@@ -2,34 +2,37 @@
   <form class="form form--dates" @submit.prevent>
     <div class="form__content">
       <h1 class="form__content__hero">Tarih Seçimi</h1>
-      <Datepicker
-        :value="localDates"
-        mode="range"
-        locale="tr-TR"
-        :popover="{ placement: 'bottom', visibility: 'click' }"
-        :minDate="new Date()"
-        :maxDate="maxDate"
-        :columns="2"
-        @input="setDateRange"
-      >
-        <div class="datepicker">
-          <div class="datepicker__input">
-            <label class="heading">Giriş Tarihi</label>
-            <div class="date-info">
-              {{ formattedCheckinDate }}
-            </div>
-          </div>
-          <img
-            class="datepicker__seperator"
-            src="@/assets/images/icon-arrow-right.svg"
-          />
-          <div class="datepicker__input">
-            <label class="heading">Çıkış Tarihi</label>
-            <div class="date-info">
-              {{ formattedCheckoutDate }}
-            </div>
+      <div class="datepicker" @click="showDatepicker = !showDatepicker">
+        <div class="datepicker__input">
+          <label class="heading">Giriş Tarihi</label>
+          <div class="date-info">
+            {{ formattedCheckinDate }}
           </div>
         </div>
+        <img
+          class="datepicker__seperator"
+          src="@/assets/images/icon-arrow-right.svg"
+        />
+        <div class="datepicker__input">
+          <label class="heading">Çıkış Tarihi</label>
+          <div class="date-info">
+            {{ formattedCheckoutDate }}
+          </div>
+        </div>
+      </div>
+      <Datepicker
+        v-if="showDatepicker"
+        :value="localDates"
+        :popover="{ placement: 'bottom' }"
+        :minDate="new Date()"
+        :maxDate="maxDate"
+        :columns="$screens({ default: 1, md: 2 })"
+        mode="range"
+        locale="tr-TR"
+        is-expanded
+        is-inline
+        @input="setDateRange"
+      >
       </Datepicker>
     </div>
     <div class="form__footer">
@@ -61,7 +64,8 @@ export default {
       localDates: {
         start: new Date(),
         end: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
-      }
+      },
+      showDatepicker: false
     };
   },
   components: {
@@ -91,6 +95,8 @@ export default {
       this.localDates.end = val.end;
 
       this.$store.commit("setDates", this.localDates);
+
+      this.showDatepicker = !this.showDatepicker;
     },
     next() {
       this.$store.commit("setDates", this.localDates);
@@ -105,9 +111,16 @@ export default {
   &--dates {
     .datepicker {
       display: flex;
+      align-items: center;
       background-color: #fff;
       border-radius: 5px;
       cursor: pointer;
+
+      @media (max-width: 767px) {
+        max-height: 90px;
+        flex: 0 0 90px;
+        height: 90px;
+      }
 
       &__input {
         flex: 1;
@@ -130,6 +143,12 @@ export default {
         margin-left: 20px;
         margin-right: 20px;
         opacity: 0.3;
+
+        @media (max-width: 767px) {
+          max-width: 20px;
+          margin-right: 5px;
+          margin-left: 5px;
+        }
       }
     }
 

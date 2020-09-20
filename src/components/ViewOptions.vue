@@ -51,6 +51,11 @@ export default {
   display: flex;
   margin-top: 10px;
 
+  @media (max-width: 767px) {
+    align-items: center;
+    margin-top: 30px;
+  }
+
   &__hero {
     flex: 0 0 120px;
     max-width: 120px;
@@ -61,9 +66,14 @@ export default {
   &__options {
     display: flex;
 
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+
     &__item {
       display: flex;
       align-items: center;
+      margin-right: 30px;
       font-weight: 600;
 
       input {
@@ -74,7 +84,9 @@ export default {
       }
 
       & + & {
-        margin-left: 20px;
+        @media (max-width: 767px) {
+          margin-top: 10px;
+        }
       }
     }
   }

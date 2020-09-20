@@ -28,6 +28,10 @@ export default {
   display: flex;
   font-size: 16px;
 
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+
   &__item {
     > span {
       opacity: 0.75;
@@ -37,6 +41,10 @@ export default {
   &__seperator {
     margin-left: 10px;
     margin-right: 10px;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 }
 </style>

@@ -135,7 +135,8 @@ export default {
       "selectedRoomType",
       "selectedViewOption",
       "formattedCheckinDate",
-      "formattedCheckoutDate"
+      "formattedCheckoutDate",
+      "viewOptions"
     ]),
     isFormValid() {
       let isValid = false;
@@ -179,8 +180,17 @@ export default {
           </div>
         `
       }).then(() => {
+        localStorage.removeItem("checkinDate");
+        localStorage.removeItem("checkoutDate");
+        localStorage.removeItem("formattedCheckinDate");
+        localStorage.removeItem("formattedCheckoutDate");
+        localStorage.removeItem("selectedRoomType");
+        localStorage.removeItem("selectedViewOption");
+
         this.$store.commit("setCardInfo", {});
         this.$store.commit("setProgressStep", 0);
+
+        window.location.href = "/";
       });
     },
     rotateCard() {
@@ -207,11 +217,20 @@ export default {
     &:not(:first-child) {
       margin-top: 10px;
     }
+
+    &__column {
+      @media (max-width: 767px) {
+        &:not(:first-child) {
+          margin-top: 10px;
+        }
+      }
+    }
   }
 }
 
 .card-view {
   position: relative;
+  height: calc(100% - 20px);
   min-height: 140px;
   margin-top: 20px;
   transition: all 0.3s linear;
@@ -248,7 +267,12 @@ export default {
       margin-top: 35px;
 
       .number {
+        flex: 0 0 150px;
+        max-width: 150px;
+
         input {
+          max-width: 100%;
+          padding: 0;
           background: transparent;
           border: none;
           font-size: 16px;
