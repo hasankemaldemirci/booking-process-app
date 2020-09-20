@@ -9,8 +9,9 @@
         :popover="{ placement: 'bottom', visibility: 'click' }"
         :minDate="new Date()"
         :maxDate="maxDate"
-        :columns="2"
+        :columns="$screens({ default: 1, md: 2 })"
         @input="setDateRange"
+        is-expanded
       >
         <div class="datepicker">
           <div class="datepicker__input">
@@ -130,6 +131,12 @@ export default {
         margin-left: 20px;
         margin-right: 20px;
         opacity: 0.3;
+
+        @media (max-width: 767px) {
+          max-width: 20px;
+          margin-right: 5px;
+          margin-left: 5px;
+        }
       }
     }
 

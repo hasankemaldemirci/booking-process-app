@@ -38,10 +38,26 @@ export default {
 
 <style lang="scss">
 .process-wrapper {
+  display: flex;
+  flex-direction: column;
   background-color: #f5f5f5;
   width: 700px;
   max-width: 100%;
+  min-height: 485px;
   border-radius: 10px;
   box-shadow: $box-shadow;
+
+  @media (max-width: 767px) {
+    min-height: 100vh;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  &__forms {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 }
 </style>

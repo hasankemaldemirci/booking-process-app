@@ -27,6 +27,10 @@ input {
   position: relative;
   min-height: 100vh;
   padding: 15px;
+
+  @media (max-width: 767px) {
+    padding: 0;
+  }
 }
 
 .flex-row {
@@ -71,6 +75,11 @@ input {
     padding: 20px;
     font-size: 16px;
 
+    @media (max-width: 767px) {
+      max-height: calc(100vh - 180px);
+      overflow-y: auto;
+    }
+
     &__hero {
       font-size: 24px;
       margin-bottom: 10px;
@@ -104,4 +113,11 @@ input {
     border-color: #b9b9b9;
     cursor: default;
   }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
 }

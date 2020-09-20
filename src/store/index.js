@@ -75,17 +75,6 @@ export default new Vuex.Store({
           );
         }
       });
-
-      if (!val) {
-        localStorage.removeItem("checkinDate");
-        localStorage.removeItem("checkoutDate");
-        localStorage.removeItem("formattedCheckinDate");
-        localStorage.removeItem("formattedCheckoutDate");
-        localStorage.removeItem("selectedRoomType");
-        localStorage.removeItem("selectedViewOption");
-
-        window.location.href = "/";
-      }
     },
     setRoomTypeSelected(state, val) {
       state.selectedRoomType = val;

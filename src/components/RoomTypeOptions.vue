@@ -37,7 +37,7 @@ export default {
     changeRoomTypeSelected(index) {
       const roomTypes = this.roomTypes.slice();
 
-      roomTypes.map(item => (item.checked = false));
+      roomTypes.map((item) => (item.checked = false));
       roomTypes[index].checked = !roomTypes[index].checked;
 
       this.$store.commit("setRoomTypeSelected", roomTypes[index]);
@@ -51,6 +51,10 @@ export default {
   display: flex;
   margin-top: 30px;
 
+  @media(max-width: 767px) {
+    align-items: center;
+  }
+
   &__hero {
     flex: 0 0 120px;
     max-width: 120px;
@@ -61,10 +65,15 @@ export default {
   &__options {
     display: flex;
 
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+
     &__item {
       display: flex;
       align-items: center;
       font-weight: 600;
+      margin-right: 30px;
 
       input {
         width: 20px;
@@ -73,7 +82,9 @@ export default {
       }
 
       & + & {
-        margin-left: 20px;
+        @media (max-width: 767px) {
+          margin-top: 10px;
+        }
       }
     }
   }
