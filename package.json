@@ -11,6 +11,8 @@
     "core-js": "^3.6.5",
     "v-calendar": "^1.0.8",
     "vue": "^2.6.11",
+    "vue-sweetalert2": "^3.0.8",
+    "vue-the-mask": "^0.11.1",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

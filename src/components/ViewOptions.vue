@@ -4,20 +4,22 @@
     <div class="view-type__options">
       <label
         class="view-type__options__item"
-        v-for="view in viewOptions"
-        :key="view.id"
-        :for="`view-option-${view.id}`"
+        v-for="viewOption in viewOptions"
+        :key="viewOption.id"
+        :for="`view-option-${viewOption.id}`"
       >
         <input
           type="radio"
           name="view-select-options"
-          v-model="view.checked"
-          :id="`view-option-${view.id}`"
-          :value="view.name"
-          :checked="view.checked"
-          @change="changeViewOptionSelected(view.id)"
+          :id="`view-option-${viewOption.id}`"
+          :checked="
+            selectedViewOption
+              ? selectedViewOption.id === viewOption.id
+              : viewOption.checked
+          "
+          @change="changeViewOptionSelected(viewOption.id)"
         />
-        {{ view.name }}
+        {{ viewOption.name }}
       </label>
     </div>
   </div>
@@ -29,7 +31,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "ViewOptions",
   computed: {
-    ...mapGetters(["viewOptions"])
+    ...mapGetters(["viewOptions", "selectedViewOption"])
   },
   methods: {
     changeViewOptionSelected(index) {
@@ -65,6 +67,9 @@ export default {
       font-weight: 600;
 
       input {
+        width: 20px;
+        height: 20px;
+
         margin-right: 5px;
       }
 

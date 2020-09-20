@@ -12,7 +12,11 @@
           type="radio"
           name="room-type"
           :id="`room-type-option-${roomType.id}`"
-          :checked="roomType.checked"
+          :checked="
+            selectedRoomType
+              ? selectedRoomType.id === roomType.id
+              : roomType.checked
+          "
           @change="changeRoomTypeSelected(roomType.id)"
         />
         {{ roomType.name }}
@@ -25,9 +29,9 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "RoomTypes",
+  name: "RoomTypeOptions",
   computed: {
-    ...mapGetters(["roomTypes"])
+    ...mapGetters(["roomTypes", "selectedRoomType"])
   },
   methods: {
     changeRoomTypeSelected(index) {
@@ -45,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 .room-type {
   display: flex;
+  margin-top: 30px;
 
   &__hero {
     flex: 0 0 120px;
@@ -62,6 +67,8 @@ export default {
       font-weight: 600;
 
       input {
+        width: 20px;
+        height: 20px;
         margin-right: 5px;
       }
 

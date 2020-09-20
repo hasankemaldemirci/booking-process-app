@@ -6,6 +6,7 @@
         <div class="process-wrapper__forms">
           <Dates v-if="currentStep.id === 1" />
           <Room v-if="currentStep.id === 2" />
+          <Payment v-if="currentStep.id === 3" />
         </div>
       </div>
     </div>
@@ -19,13 +20,15 @@ import { mapGetters } from "vuex";
 import ProgressBar from "./components/ProgressBar";
 import Dates from "./components/Dates";
 import Room from "./components/Room";
+import Payment from "./components/Payment";
 
 export default {
   name: "App",
   components: {
     ProgressBar,
     Dates,
-    Room
+    Room,
+    Payment
   },
   computed: {
     ...mapGetters(["currentStep"])
@@ -36,7 +39,7 @@ export default {
 <style lang="scss">
 .process-wrapper {
   background-color: #f5f5f5;
-  width: 600px;
+  width: 700px;
   max-width: 100%;
   border-radius: 10px;
   box-shadow: $box-shadow;

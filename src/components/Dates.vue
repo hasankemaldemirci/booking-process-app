@@ -1,8 +1,9 @@
 <template>
   <form class="form form--dates" @submit.prevent>
     <div class="form__content">
+      <h1 class="form__content__hero">Tarih Seçimi</h1>
       <Datepicker
-        value
+        :value="localDates"
         mode="range"
         locale="tr-TR"
         :popover="{ placement: 'bottom', visibility: 'click' }"
@@ -15,7 +16,7 @@
           <div class="datepicker__input">
             <label class="heading">Giriş Tarihi</label>
             <div class="date-info">
-              {{ localDates.start || dates.start || "-" }}
+              {{ formattedCheckinDate }}
             </div>
           </div>
           <img
@@ -25,7 +26,7 @@
           <div class="datepicker__input">
             <label class="heading">Çıkış Tarihi</label>
             <div class="date-info">
-              {{ localDates.end || dates.end || "-" }}
+              {{ formattedCheckoutDate }}
             </div>
           </div>
         </div>
@@ -58,23 +59,27 @@ export default {
   data() {
     return {
       localDates: {
-        start: null,
-        end: null
-      },
-      formatDateOptions: { year: "numeric", month: "numeric", day: "numeric" }
+        start: new Date(),
+        end: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000)
+      }
     };
   },
   components: {
     Datepicker
   },
   created() {
-    this.localDates = JSON.parse(localStorage.getItem("dates")) || {
-      start: null,
-      end: null
-    };
+    if (
+      localStorage.getItem("checkinDate") &&
+      localStorage.getItem("checkoutDate")
+    ) {
+      this.localDates.start = new Date(localStorage.getItem("checkinDate"));
+      this.localDates.end = new Date(localStorage.getItem("checkoutDate"));
+    }
+
+    this.$store.commit("setDates", this.localDates);
   },
   computed: {
-    ...mapGetters(["dates"]),
+    ...mapGetters(["formattedCheckinDate", "formattedCheckoutDate"]),
     maxDate() {
       const oneYearFromNow = new Date();
       return oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
@@ -82,22 +87,14 @@ export default {
   },
   methods: {
     setDateRange(val) {
-      const start = new Date(val.start).toLocaleDateString(
-        "tr-TR",
-        this.formatDateOptions
-      );
-      const end = new Date(val.end).toLocaleDateString(
-        "tr-TR",
-        this.formatDateOptions
-      );
+      this.localDates.start = val.start;
+      this.localDates.end = val.end;
 
-      this.localDates = { start, end };
+      this.$store.commit("setDates", this.localDates);
     },
     next() {
-      if (this.localDates) {
-        this.$store.commit("setDates", this.localDates);
-        this.$store.commit("setProgressStep", 1);
-      }
+      this.$store.commit("setDates", this.localDates);
+      this.$store.commit("setProgressStep", 1);
     }
   }
 };

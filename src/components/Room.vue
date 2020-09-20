@@ -1,18 +1,9 @@
 <template>
   <form class="form form--room" @submit.prevent>
     <div class="form__content">
-      <div class="selected-dates">
-        <div class="selected-dates__item">
-          <span>Giriş Tarihi : </span>
-          <strong>{{ dates.start }}</strong>
-        </div>
-        <span class="selected-dates__seperator">-</span>
-        <div class="selected-dates__item">
-          <span>Çıkış Tarihi : </span>
-          <strong>{{ dates.end }}</strong>
-        </div>
-      </div>
-      <RoomTypes />
+      <h1 class="form__content__hero">Oda Seçimi</h1>
+      <SelectedDates />
+      <RoomTypeOptions />
       <ViewOptions />
     </div>
     <div class="form__footer">
@@ -38,17 +29,19 @@
 import { mapGetters } from "vuex";
 
 // Components
-import RoomTypes from "./RoomTypes";
+import SelectedDates from "./SelectedDates";
+import RoomTypeOptions from "./RoomTypeOptions";
 import ViewOptions from "./ViewOptions";
 
 export default {
   name: "Room",
   components: {
-    RoomTypes,
-    ViewOptions
+    RoomTypeOptions,
+    ViewOptions,
+    SelectedDates
   },
   computed: {
-    ...mapGetters(["dates", "selectedRoomType", "selectedViewOption"])
+    ...mapGetters(["selectedRoomType", "selectedViewOption"])
   },
   methods: {
     prev() {
@@ -60,26 +53,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.form--room {
-  font-size: 16px;
-}
-
-.selected-dates {
-  display: flex;
-  font-size: 16px;
-  margin-bottom: 30px;
-
-  &__item {
-    > span {
-      opacity: 0.75;
-    }
-  }
-
-  &__seperator {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-}
-</style>
