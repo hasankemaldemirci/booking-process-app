@@ -41,7 +41,18 @@ input {
   }
 
   &__column {
-    padding: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    &--12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    &--6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
 
     &--3 {
       flex: 0 0 25%;
@@ -58,7 +69,14 @@ input {
 .form {
   &__content {
     padding: 20px;
+    font-size: 16px;
+
+    &__hero {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
   }
+
   &__footer {
     display: flex;
     justify-content: space-between;
@@ -73,6 +91,7 @@ input {
   background-color: transparent;
   border: 2px solid $color-text;
   border-radius: 5px;
+  font-size: 16px;
   font-weight: 600;
   text-align: center;
   transition: 0.1s;
