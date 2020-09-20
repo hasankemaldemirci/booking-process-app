@@ -43,7 +43,7 @@ export default {
   background-color: #f5f5f5;
   width: 700px;
   max-width: 100%;
-  min-height: 485px;
+  min-height: 635px;
   border-radius: 10px;
   box-shadow: $box-shadow;
 

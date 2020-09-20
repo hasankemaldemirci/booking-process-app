@@ -267,7 +267,12 @@ export default {
       margin-top: 35px;
 
       .number {
+        flex: 0 0 150px;
+        max-width: 150px;
+
         input {
+          max-width: 100%;
+          padding: 0;
           background: transparent;
           border: none;
           font-size: 16px;

@@ -37,7 +37,7 @@ export default {
     changeRoomTypeSelected(index) {
       const roomTypes = this.roomTypes.slice();
 
-      roomTypes.map((item) => (item.checked = false));
+      roomTypes.map(item => (item.checked = false));
       roomTypes[index].checked = !roomTypes[index].checked;
 
       this.$store.commit("setRoomTypeSelected", roomTypes[index]);
@@ -51,7 +51,7 @@ export default {
   display: flex;
   margin-top: 30px;
 
-  @media(max-width: 767px) {
+  @media (max-width: 767px) {
     align-items: center;
   }
 
